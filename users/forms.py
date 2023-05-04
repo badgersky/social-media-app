@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from . import models
@@ -62,3 +63,25 @@ class RegistrationForm(forms.ModelForm):
             user.save()
 
         return user
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label='Username',
+        widget=forms.TextInput(attrs={
+            'name': 'username',
+            'placeholder': 'Username',
+        })
+    )
+
+    password = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={
+            'name': 'password',
+            'placeholder': 'Password',
+        })
+    )
+
+    class Meta:
+        fields = ('username', 'password')
+        
