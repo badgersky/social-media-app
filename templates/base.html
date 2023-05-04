@@ -24,6 +24,13 @@
     <div class="col-1"></div>
     <div class="col-10 bg-lighte">
         {% include 'partials/nav.html' %}
+
+        <div class="mt-2 mb-2 d-flex justify-content-evenly">
+            <a href="{% url 'posts:create' %}">
+                <button class="btn btn-secondary">Tweet Something</button>
+            </a>
+        </div>
+
         {% block content %}
 
         {% endblock %}
