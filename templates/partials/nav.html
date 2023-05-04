@@ -23,6 +23,9 @@
                     </li>
                 {% endif %}
             </ul>
+            {% if user.is_authenticated %}
+                <span class="navbar-text">Logged in</span>
+            {% endif %}
             <form class="d-flex" role="search">
                 <input class="form-control bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-secondary" type="submit">Search</button>
