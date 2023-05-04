@@ -10,9 +10,15 @@
                 <li class="nav-item">
                     <a class="nav-link text-black" aria-current="page" href="{% url 'home:home' %}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="{% url 'users:register' %}">Register</a>
-                </li>
+                {% if user.is_authenticated %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'users:register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'users:login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
