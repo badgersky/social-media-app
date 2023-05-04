@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     # my apps
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
-    'posts.apps.AppConfig',
+    'posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [
