@@ -22,7 +22,8 @@ from config import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls'))
+    path('', include('home.urls')),
+    path('users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
