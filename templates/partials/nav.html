@@ -1,0 +1,38 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg bg-dark-subtle">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <img src="{% static 'images/eye-logo.svg' %}" alt="logo" width="50" height="50">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-black" aria-current="page" href="{% url 'home:home' %}">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'posts:create' %}">Tweet Something</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'users:logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'users:register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'users:login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+                <span class="navbar-text">Logged in</span>
+            {% endif %}
+            <form class="d-flex" role="search">
+                <input class="form-control bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
