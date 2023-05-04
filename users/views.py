@@ -1,3 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views import View
 
-# Create your views here.
+from users import forms
+
+
+class RegistrationView(View):
+
+    def get(self, request):
+        form = forms.RegistrationForm()
+        return render(request, 'users/registration.html', {'form': form})
+
+    def post(self, request):
+        form = forms.RegistrationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse(''))
