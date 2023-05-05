@@ -6,5 +6,49 @@
 {% endblock %}
 
 {% block content %}
-    <h1>HOME PAGE</h1>
+    {% for tweet in page_obj %}
+        <div class="card mt-5 mb-5">
+            <h5 class="card-header bg-dark-subtle">{{ tweet.title }}</h5>
+            <div class="card-body mt-2 mb-1">
+                <p class="card-text">{{ tweet.date }}</p>
+                <p class="card-text">{{ tweet.content }}</p>
+                <a href="" class="btn btn-secondary">Like</a>
+                <a href="" class="btn btn-secondary">Dislike</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <nav>
+        <ul class="pagination mb-3">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page=1">
+                        <button type="button" class="btn btn-secondary">First</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <button type="button" class="btn btn-secondary">&laquo;</button>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <a href="">
+                    <button type="button" class="btn btn-secondary">{{ page_obj.number }}</button>
+                </a>
+            </li>
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <button type="button" class="btn btn-secondary">&raquo;</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">
+                        <button type="button" class="btn btn-secondary">Last</button>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
