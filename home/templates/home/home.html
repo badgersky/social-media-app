@@ -22,21 +22,32 @@
         <ul class="pagination mb-3">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a href="?page=1">&laquo; first</a>
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                    <a href="?page=1">
+                        <button type="button" class="btn btn-secondary">First</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <button type="button" class="btn btn-secondary">&laquo;</button>
                     </a>
                 </li>
             {% endif %}
-            <li class="page-item"><a class="page-link" href="">{{ page_obj.number }}</a></li>
+            <li class="page-item">
+                <a href="">
+                    <button type="button" class="btn btn-secondary">{{ page_obj.number }}</button>
+                </a>
+            </li>
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <button type="button" class="btn btn-secondary">&raquo;</button>
                     </a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
                 </li>
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <li>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">
+                        <button type="button" class="btn btn-secondary">Last</button>
+                    </a>
+                </li>
             {% endif %}
         </ul>
     </nav>
