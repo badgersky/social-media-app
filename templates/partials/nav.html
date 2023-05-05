@@ -29,8 +29,9 @@
             {% if user.is_authenticated %}
                 <span class="navbar-text">Logged in</span>
             {% endif %}
-            <form class="d-flex" role="search">
-                <input class="form-control bg-dark-subtle" type="search" placeholder="Search" aria-label="Search">
+            <form action="{% url 'users:search' %}" method="get" class="d-flex" role="search">
+                <input class="form-control bg-dark-subtle" type="text" name="username" placeholder="Search"
+                       aria-label="Search">
                 <button class="btn btn-secondary" type="submit">Search</button>
             </form>
         </div>

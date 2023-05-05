@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from users import forms
+from users import forms, models
+from posts.models import Tweet
 
 
 class RegistrationView(View):
@@ -51,3 +52,21 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect(reverse('home:home'))
+
+
+class SearchUsersView(View):
+
+    def get(self, request):
+        username = request.GET.get('username')
+
+        try:
+            user = models.CustomUser.objects.get(username=username)
+        except models.CustomUser.DoesNotExist:
+            return redirect(reverse('home:home'))
+
+        try:
+            tweets = Tweet.objects.filter(user=user).order_by('date')
+        except Tweet.DoesNotExist:
+            tweets = False
+
+        return render(request, 'users/search.html', {'found_user': user, 'tweets': tweets})
