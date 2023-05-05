@@ -1,4 +1,4 @@
-# Social media tweeter-like web app.
+# Social media twitter-like web app.
 
 ## Features:
 - registering and logging
