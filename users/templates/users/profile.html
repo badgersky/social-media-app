@@ -45,7 +45,7 @@
                 <p class="card-text">{{ tweet.content }}</p>
                 <p class="card-text">{{ tweet.likes }}</p>
                 <a href="{% url 'posts:like' post_id=tweet.id %}" class="btn btn-secondary">Like</a>
-                <a href="" class="btn btn-secondary">Dislike</a>
+                <a href="{% url 'posts:dislike' post_id=tweet.id %}" class="btn btn-secondary">Dislike</a>
             </div>
         </div>
     {% endfor %}
