@@ -6,5 +6,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>HOME PAGE</h1>
+    {% for tweet in tweets %}
+        <div class="card mt-5 mb-5">
+            <h5 class="card-header bg-dark-subtle">{{ tweet.title }}</h5>
+            <div class="card-body mt-2 mb-1">
+                <p class="card-text">{{ tweet.date }}</p>
+                <p class="card-text">{{ tweet.content }}</p>
+                <a href="" class="btn btn-secondary">Like</a>
+                <a href="" class="btn btn-secondary">Dislike</a>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
