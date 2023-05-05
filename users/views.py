@@ -76,9 +76,10 @@ class SearchUsersView(View):
             return redirect(reverse('home:home'))
 
         tweets = self.get_users_tweets(user)
-        if tweets:
+
+        try:
             last_tweet = tweets[0]
-        else:
+        except IndexError:
             last_tweet = False
 
         return render(request, 'users/search.html', {'found_user': user, 'last_tweet': last_tweet})
@@ -88,7 +89,7 @@ class SearchUsersView(View):
         try:
             tweets = Tweet.objects.filter(user=user).order_by('-date')
         except Tweet.DoesNotExist:
-            tweets = []
+            tweets = False
 
         return tweets
 

@@ -11,23 +11,30 @@
     <div class="card mt-4 mb-4">
         <h5 class="card-header bg-dark-subtle">User: {{ found_user.username }}</h5>
         <div class="card-body">
-            <a href="{% url 'users:profile' user_id=found_user.id %}" class="btn btn-secondary">{{ found_user.username }} profile</a>
+            <a href="{% url 'users:profile' user_id=found_user.id %}"
+               class="btn btn-secondary">{{ found_user.username }} profile</a>
             <img src="{% static 'images/user.svg' %}" class="float-end" alt="user" width="50" height="50">
         </div>
     </div>
 
-    <div class="card mt-5 mb-3">
-        {% if not tweets %}
-            <h5 class="card-header bg-dark-subtle">User {{ found_user.username }} has no posts</h5>
-        {% else %}
-            <h5 class="card-header bg-dark-subtle">{{ found_user.username }} last post:</h5>
-        {% endif %}
-
-        <div class="card-body mt-1 mb-1">
-            <h5 class="card-title">{{ last_tweet.title }}</h5>
-            <p class="card-text">{{ last_tweet.date }}</p>
-            <p class="card-text">{{ last_tweet.content }}</p>
+    {% if not last_tweet %}
+        <div class="mt-5 mb-1 bg-dark-subtle d-flex justify-content-center">
+            <h3 class="mt-2 mb-2">{{ found_user.username }} has no posts</h3>
         </div>
-    </div>
+    {% else %}
+        <div class="mt-5 mb-1 bg-dark-subtle d-flex justify-content-center">
+            <h3 class="mt-2 mb-2">{{ found_user.username }} last post:</h3>
+        </div>
+
+        <div class="card mt-3 mb-3">
+            <h5 class="card-header bg-dark-subtle">{{ last_tweet.title }}</h5>
+            <div class="card-body mt-1 mb-1">
+                <p class="card-text">{{ last_tweet.date }}</p>
+                <p class="card-text">{{ last_tweet.content }}</p>
+            </div>
+        </div>
+    {% endif %}
+
+
 
 {% endblock %}
