@@ -11,7 +11,7 @@
     <div class="card mt-4 mb-4">
         <h5 class="card-header bg-dark-subtle">User: {{ found_user.username }}</h5>
         <div class="card-body">
-            <a href="" class="btn btn-secondary">{{ found_user.username }} profile</a>
+            <a href="{% url 'users:profile' user_id=found_user.id %}" class="btn btn-secondary">{{ found_user.username }} profile</a>
             <img src="{% static 'images/user.svg' %}" class="float-end" alt="user" width="50" height="50">
         </div>
     </div>

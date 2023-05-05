@@ -104,4 +104,9 @@ class UserProfileView(View):
 
         tweets = SearchUsersView.get_users_tweets(user)
 
-        return render(request, 'users/profile.html', {'found_user': user, 'tweets': tweets})
+        if user == request.user:
+            owner = True
+        else:
+            owner = False
+
+        return render(request, 'users/profile.html', {'found_user': user, 'tweets': tweets, 'owner': owner})

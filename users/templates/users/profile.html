@@ -8,22 +8,28 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card">
+    <div class="card mt-3 mb-3">
+        <h5 class="card-header bg-dark-subtle">Username: {{ found_user.username }}</h5>
         <div class="card-body">
-            <h5 class="card-title">{{ found_user.username }}</h5>
             {% if found_user.first_name and found_user.last_name %}
-                <p class="card-text">Name: {{ found_user.first_name }} {{ found_user.last_name }}</p>
+                <p class="card-text">Name: {{ found_user.first_name.title }} {{ found_user.last_name.title }}</p>
             {% endif %}
             <p class="card-text">Date joined: {{ found_user.date_joined }}</p>
-            <a href="" class="btn btn-secondary">Follow</a>
+            {% if not owner %}
+                <a href="" class="btn btn-secondary">Follow</a>
+            {% endif %}
         </div>
     </div>
 
+    <div class="mt-5 mb-1 bg-dark-subtle d-flex justify-content-center">
+        <h3 class="mt-2 mb-2">{{ found_user.username }} posts:</h3>
+    </div>
+
     {% for tweet in tweets %}
-        <div class="card">
-            <h5 class="card-header">{{ tweet.title }}</h5>
-            <p>{{ tweet.date }}</p>
+        <div class="card mt-3 mb-3">
+            <h5 class="card-header bg-dark-subtle">{{ tweet.title }}</h5>
             <div class="card-body">
+                <p class="card-text">{{ tweet.date }}</p>
                 <p class="card-text">{{ tweet.content }}</p>
                 <a href="" class="btn btn-secondary">Like</a>
                 <a href="" class="btn btn-secondary">Dislike</a>
