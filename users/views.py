@@ -76,15 +76,19 @@ class SearchUsersView(View):
             return redirect(reverse('home:home'))
 
         tweets = self.get_users_tweets(user)
+        if tweets:
+            last_tweet = tweets[0]
+        else:
+            last_tweet = False
 
-        return render(request, 'users/search.html', {'found_user': user, 'last_tweet': tweets[0]})
+        return render(request, 'users/search.html', {'found_user': user, 'last_tweet': last_tweet})
 
     @staticmethod
     def get_users_tweets(user):
         try:
             tweets = Tweet.objects.filter(user=user).order_by('-date')
         except Tweet.DoesNotExist:
-            tweets = False
+            tweets = []
 
         return tweets
 
