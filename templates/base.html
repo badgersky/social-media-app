@@ -27,12 +27,6 @@
 
         {% include 'partials/messages.html' %}
 
-        <div class="mt-4 mb-2">
-            <a href="{% url 'posts:create' %}">
-                <button class="btn btn-secondary">Tweet Something</button>
-            </a>
-        </div>
-
         {% block content %}
 
         {% endblock %}

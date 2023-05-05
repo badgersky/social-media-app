@@ -17,6 +17,12 @@
             <p class="card-text">Date joined: {{ found_user.date_joined }}</p>
             {% if not owner %}
                 <a href="" class="btn btn-secondary">Follow</a>
+            {% else %}
+                <div class="mt-2 mb-2">
+                    <a href="{% url 'posts:create' %}">
+                        <button class="btn btn-secondary">Tweet Something</button>
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>
