@@ -9,3 +9,8 @@ class Tweet(models.Model):
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+
+
+class TweetLikes(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
