@@ -33,7 +33,13 @@
 
     {% for tweet in tweets %}
         <div class="card mt-3 mb-3">
-            <h5 class="card-header bg-dark-subtle">{{ tweet.title }}</h5>
+            <h5 class="card-header bg-dark-subtle">
+                {{ tweet.title }}
+                {% if owner %}
+                    <a href="{% url 'posts:delete' user_id=user.id post_id=tweet.id %}"
+                       class="btn btn-secondary float-end">Delete</a>
+                {% endif %}
+            </h5>
             <div class="card-body">
                 <p class="card-text">{{ tweet.date }}</p>
                 <p class="card-text">{{ tweet.content }}</p>

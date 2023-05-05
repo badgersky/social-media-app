@@ -6,4 +6,5 @@ app_name = 'posts'
 
 urlpatterns = [
     path('create/', views.CreatePost.as_view(), name='create'),
+    path('delete/<post_id>/<user_id>/', views.DeletePost.as_view(), name='delete'),
 ]
