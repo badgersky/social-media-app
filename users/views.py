@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from users import forms
+from users import forms, models
+from posts.models import Tweet
 
 
 class RegistrationView(View):
@@ -17,6 +19,11 @@ class RegistrationView(View):
 
         if form.is_valid():
             form.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 f'Registration successful, please login.')
+
             return redirect(reverse('users:login'))
 
         return render(request, 'users/registration.html', {'form': form})
@@ -51,3 +58,55 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect(reverse('home:home'))
+
+
+class SearchUsersView(View):
+
+    def get(self, request):
+        username = request.GET.get('username')
+
+        try:
+            user = models.CustomUser.objects.get(username=username)
+        except models.CustomUser.DoesNotExist:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'No such user!'
+                                 )
+
+            return redirect(reverse('home:home'))
+
+        tweets = self.get_users_tweets(user)
+
+        return render(request, 'users/search.html', {'found_user': user, 'last_tweet': tweets[0]})
+
+    @staticmethod
+    def get_users_tweets(user):
+        try:
+            tweets = Tweet.objects.filter(user=user).order_by('-date')
+        except Tweet.DoesNotExist:
+            tweets = False
+
+        return tweets
+
+
+class UserProfileView(View):
+
+    def get(self, request, user_id):
+        try:
+            user = models.CustomUser.objects.get(pk=user_id)
+        except models.CustomUser.DoesNotExist:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'No such user!'
+                                 )
+
+            return redirect(reverse('home:home'))
+
+        tweets = SearchUsersView.get_users_tweets(user)
+
+        if user == request.user:
+            owner = True
+        else:
+            owner = False
+
+        return render(request, 'users/profile.html', {'found_user': user, 'tweets': tweets, 'owner': owner})
