@@ -58,3 +58,64 @@ class DeletePost(View):
             return redirect(reverse('users:profile', kwargs={'user_id': user_id}))
         else:
             return redirect(reverse('users:login'))
+
+
+class LikePost(View):
+
+    def get(self, request, post_id):
+        referer = request.headers.get('Referer')
+
+        try:
+            tweet = models.Tweet.objects.get(pk=post_id)
+        except models.Tweet.DoesNotExist:
+            return redirect(reverse('home:home'))
+
+        if not request.user.is_authenticated:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'You must be logged in in order to like post.',
+                                 )
+
+            return redirect(reverse('users:login'))
+
+        if tweet.user == request.user:
+            return redirect(referer)
+
+        if models.TweetLikes.objects.filter(tweet=tweet, user=request.user).exists():
+            return redirect(referer)
+
+        tweet.likes += 1
+        tweet.save()
+        models.TweetLikes.objects.create(tweet=tweet, user=request.user)
+        return redirect(referer)
+
+
+class DislikePost(View):
+
+    def get(self, request, post_id):
+        referer = request.headers.get('Referer')
+
+        try:
+            tweet = models.Tweet.objects.get(pk=post_id)
+        except models.Tweet.DoesNotExist:
+            return redirect(referer)
+
+        if not request.user.is_authenticated:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'You must be logged in in order to like post.',
+                                 )
+
+            return redirect(reverse('users:login'))
+
+        if tweet.user == request.user:
+            return redirect(referer)
+
+        if models.TweetLikes.objects.filter(tweet=tweet, user=request.user).exists():
+            tweet_post = models.TweetLikes.objects.filter(tweet=tweet, user=request.user)
+            tweet_post.delete()
+            tweet.likes -= 1
+            tweet.save()
+            return redirect(referer)
+
+        return redirect(referer)
