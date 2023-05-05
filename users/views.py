@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -18,6 +19,11 @@ class RegistrationView(View):
 
         if form.is_valid():
             form.save()
+
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 f'Registration successful, please login.')
+            
             return redirect(reverse('users:login'))
 
         return render(request, 'users/registration.html', {'form': form})
@@ -62,6 +68,11 @@ class SearchUsersView(View):
         try:
             user = models.CustomUser.objects.get(username=username)
         except models.CustomUser.DoesNotExist:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'No such user!'
+                                 )
+
             return redirect(reverse('home:home'))
 
         try:
