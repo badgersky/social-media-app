@@ -15,6 +15,9 @@
                         <a class="nav-link text-black" href="{% url 'users:profile' user_id=user.id %}">My Profile</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-black" href="{% url 'posts:create' %}">Tweet Something</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-black" href="{% url 'users:logout' %}">Logout</a>
                     </li>
                 {% else %}
