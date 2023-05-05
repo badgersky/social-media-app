@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    {% for tweet in tweets %}
+    {% for tweet in page_obj %}
         <div class="card mt-5 mb-5">
             <h5 class="card-header bg-dark-subtle">{{ tweet.title }}</h5>
             <div class="card-body mt-2 mb-1">
@@ -17,4 +17,27 @@
             </div>
         </div>
     {% endfor %}
+
+    <nav>
+        <ul class="pagination mb-3">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page=1">&laquo; first</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                </li>
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+            {% endif %}
+        </ul>
+    </nav>
 {% endblock %}
