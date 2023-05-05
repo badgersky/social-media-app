@@ -20,15 +20,14 @@
         {% if not tweets %}
             <h5 class="card-header bg-dark-subtle">User {{ found_user.username }} has no posts</h5>
         {% else %}
-            <h5 class="card-header bg-dark-subtle">{{ found_user.username }} posts:</h5>
+            <h5 class="card-header bg-dark-subtle">{{ found_user.username }} last post:</h5>
         {% endif %}
-        {% for tweet in tweets %}
-            <div class="card-body mt-1 mb-1">
-                <h5 class="card-title">{{ tweet.title }}</h5>
-                <p class="card-text">{{ tweet.date }}</p>
-                <p class="card-text">{{ tweet.content }}</p>
-            </div>
-        {% endfor %}
+
+        <div class="card-body mt-1 mb-1">
+            <h5 class="card-title">{{ last_tweet.title }}</h5>
+            <p class="card-text">{{ last_tweet.date }}</p>
+            <p class="card-text">{{ last_tweet.content }}</p>
+        </div>
     </div>
 
 {% endblock %}

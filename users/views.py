@@ -23,7 +23,7 @@ class RegistrationView(View):
             messages.add_message(request,
                                  messages.SUCCESS,
                                  f'Registration successful, please login.')
-            
+
             return redirect(reverse('users:login'))
 
         return render(request, 'users/registration.html', {'form': form})
@@ -75,9 +75,33 @@ class SearchUsersView(View):
 
             return redirect(reverse('home:home'))
 
+        tweets = self.get_users_tweets(user)
+
+        return render(request, 'users/search.html', {'found_user': user, 'last_tweet': tweets[0]})
+
+    @staticmethod
+    def get_users_tweets(user):
         try:
-            tweets = Tweet.objects.filter(user=user).order_by('date')
+            tweets = Tweet.objects.filter(user=user).order_by('-date')
         except Tweet.DoesNotExist:
             tweets = False
 
-        return render(request, 'users/search.html', {'found_user': user, 'tweets': tweets})
+        return tweets
+
+
+class UserProfileView(View):
+
+    def get(self, request, user_id):
+        try:
+            user = models.CustomUser.objects.get(pk=user_id)
+        except models.CustomUser.DoesNotExist:
+            messages.add_message(request,
+                                 messages.WARNING,
+                                 f'No such user!'
+                                 )
+
+            return redirect(reverse('home:home'))
+
+        tweets = SearchUsersView.get_users_tweets(user)
+
+        return render(request, 'users/profile.html', {'found_user': user, 'tweets': tweets})
