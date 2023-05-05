@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+    {{ found_user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ found_user.username }}</h5>
+            {% if found_user.first_name and found_user.last_name %}
+                <p class="card-text">Name: {{ found_user.first_name }} {{ found_user.last_name }}</p>
+            {% endif %}
+            <p class="card-text">Date joined: {{ found_user.date_joined }}</p>
+            <a href="" class="btn btn-secondary">Follow</a>
+        </div>
+    </div>
+
+    {% for tweet in tweets %}
+        <div class="card">
+            <h5 class="card-header">{{ tweet.title }}</h5>
+            <p>{{ tweet.date }}</p>
+            <div class="card-body">
+                <p class="card-text">{{ tweet.content }}</p>
+                <a href="" class="btn btn-secondary">Like</a>
+                <a href="" class="btn btn-secondary">Dislike</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
