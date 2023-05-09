@@ -4,4 +4,4 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    followers = models.IntegerField(validators=[MinValueValidator(0)])
+    followers = models.IntegerField(validators=[MinValueValidator(0)], default=0)
