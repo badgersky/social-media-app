@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
+from follows.models import Follow
 from users import forms, models
 from posts.models import Tweet
 
@@ -111,7 +112,14 @@ class UserProfileView(View):
 
         if user == request.user:
             owner = True
+            following = False
         else:
             owner = False
+            following = False
+            if Follow.objects.filter(followed_user=user, following_user=request.user).exists():
+                following = True
 
-        return render(request, 'users/profile.html', {'found_user': user, 'tweets': tweets, 'owner': owner})
+        return render(request, 'users/profile.html', {'found_user': user,
+                                                      'tweets': tweets,
+                                                      'owner': owner,
+                                                      'following': following})

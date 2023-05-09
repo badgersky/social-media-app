@@ -16,7 +16,13 @@
             {% endif %}
             <p class="card-text">Date joined: {{ found_user.date_joined }}</p>
             {% if not owner %}
-                <a href="" class="btn btn-secondary">Follow</a>
+                {% if not following %}
+                    <a href="{% url 'follows:follow' user_id=found_user.id %}" class="btn btn-secondary">Follow</a>
+                    <p>Followers: {{ found_user.followers }}</p>
+                {% else %}
+                    <a href="{% url 'follows:unfollow' user_id=found_user.id %}" class="btn btn-secondary">Unfollow</a>
+                    <p>Followers: {{ found_user.followers }}</p>
+                {% endif %}
             {% else %}
                 <div class="mt-2 mb-2">
                     <a href="{% url 'posts:create' %}">
