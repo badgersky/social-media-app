@@ -26,4 +26,6 @@ class FollowUser(View):
                 return redirect(reverse('users:profile', kwargs={'user_id': user_id}))
 
             Follow.objects.create(followed_user=followed_user, following_user=request.user)
+            followed_user.followers += 1
+            followed_user.save()
             return redirect(reverse('users:profile', kwargs={'user_id': user_id}))
