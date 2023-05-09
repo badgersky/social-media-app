@@ -20,7 +20,7 @@
                     <a href="{% url 'follows:follow' user_id=found_user.id %}" class="btn btn-secondary">Follow</a>
                     <p>Followers: {{ found_user.followers }}</p>
                 {% else %}
-                    <a href="" class="btn btn-secondary">Unfollow</a>
+                    <a href="{% url 'follows:unfollow' user_id=found_user.id %}" class="btn btn-secondary">Unfollow</a>
                     <p>Followers: {{ found_user.followers }}</p>
                 {% endif %}
             {% else %}
