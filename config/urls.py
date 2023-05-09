@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('users/', include('users.urls')),
     path('posts/', include('posts.urls')),
+    path('follow/', include('follows.urls')),
 ]
 
 if settings.DEBUG:
