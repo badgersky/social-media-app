@@ -22,5 +22,8 @@ class FollowUser(View):
                                      )
                 return redirect(reverse(next_))
 
+            if Follow.objects.filter(followed_user=followed_user, following_user=request.user).exists():
+                return redirect(reverse('users:profile', kwargs={'user_id': user_id}))
+
             Follow.objects.create(followed_user=followed_user, following_user=request.user)
             return redirect(reverse('users:profile', kwargs={'user_id': user_id}))
