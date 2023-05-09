@@ -1,3 +1,7 @@
 from django.db import models
+from users.models import CustomUser
 
-# Create your models here.
+
+class Follow(models.Model):
+    followed_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='followed')
+    following_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='following')
